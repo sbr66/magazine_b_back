@@ -3,9 +3,10 @@
 include_once $_SERVER['DOCUMENT_ROOT'].'/magazine_b_back/dbconn.php';
 
 $get_cate=$_GET['cate'];
-if(!isset($get_cate)){
+
+if($get_cate=='none'){
     total_page_num($conn);
-} else {
+}else{
     cate_page_num($conn, $get_cate);
 }
 
