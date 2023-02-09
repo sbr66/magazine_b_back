@@ -41,4 +41,34 @@ $req_cart = $_GET['req_cart'];
             echo json_encode(array("msg" => "상품이 추가 되었습니다.")); 
         }    
     }
+
+    // 2. 카트 요청
+    if($req_cart == "get_cart"){
+        if(isset($_SESSION['cart'])){
+            $cart_lists = $_SESSION['cart'];
+        } else {
+            $cart_lists = null;
+        }
+        
+        echo json_encode($cart_lists);
+    }
+
+    // 3. 카트 삭제
+    if($req_cart == "del_cart"){
+        $cart_idx = $_GET['cart_idx'];
+
+        // echo json_encode(array("msg" => $cart_idx)); 
+
+        // foreach as 문 ; https://extbrain.tistory.com/24
+        foreach($_SESSION['cart'] as $key => $value){
+            if($value['cart_idx'] == $cart_idx){
+                // echo json_encode(array("msg" => $key)); 
+                unset($_SESSION['cart'][$key]); // 삭제되는 세션의 인덱스
+
+                // array_values 문 : https://www.php.net/manual/en/function.array-values.php // 삭제된 세션의 인덱스를 재배치
+                $_SESSION['cart'] = array_values($_SESSION['cart']);
+                echo json_encode(array("msg" => "카트에서 상품이 삭제되었습니다.")); 
+            }
+        }
+    }
 ?>
