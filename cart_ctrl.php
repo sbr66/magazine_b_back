@@ -67,7 +67,8 @@ $req_cart = $_GET['req_cart'];
 
                 // array_values 문 : https://www.php.net/manual/en/function.array-values.php // 삭제된 세션의 인덱스를 재배치
                 $_SESSION['cart'] = array_values($_SESSION['cart']);
-                echo json_encode(array("msg" => "카트에서 상품이 삭제되었습니다.")); 
+                $cart_lists = $_SESSION['cart'];
+                echo json_encode($cart_lists); 
             }
         }
     }
