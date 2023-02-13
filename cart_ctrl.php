@@ -62,7 +62,7 @@ $req_cart = $_GET['req_cart'];
         // foreach as 문 ; https://extbrain.tistory.com/24
         foreach($_SESSION['cart'] as $key => $value){
             if($value['cart_idx'] == $cart_idx){
-                // echo json_encode(array("msg" => $key)); 
+                // echo json_encode(array("msg" => 'abc')); 
                 unset($_SESSION['cart'][$key]); // 삭제되는 세션의 인덱스
 
                 // array_values 문 : https://www.php.net/manual/en/function.array-values.php // 삭제된 세션의 인덱스를 재배치
@@ -72,4 +72,23 @@ $req_cart = $_GET['req_cart'];
             }
         }
     }
+
+    // 카트 변경
+    if($req_cart == "patch_cart"){
+        $cart_idx = (int)$_GET['cart_idx'];
+
+        $_SESSION['cart'][$cart_idx] = array(
+            'cart_idx'=> $_POST['cart_list_idx'],
+            'cart_name'=> $_POST['cart_list_name'],
+            'cart_desc'=> $_POST['cart_list_desc'],
+            'cart_price'=> $_POST['cart_list_price'],
+            'cart_img'=> $_POST['cart_list_img'],
+            'cart_count'=> $_POST['cart_list_count'],
+            'cart_sum'=> $_POST['cart_list_sum']
+        );
+
+        echo json_encode(array("cart_list"=>$_SESSION['cart']));     
+    }
+
+
 ?>
